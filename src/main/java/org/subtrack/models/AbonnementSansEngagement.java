@@ -1,6 +1,7 @@
-package org.subtrack.model;
+package org.subtrack.models;
 
 import java.time.LocalDate;
+import org.subtrack.enums.Statut;
 
 public class AbonnementSansEngagement extends Abonnement {
 
@@ -9,7 +10,7 @@ public class AbonnementSansEngagement extends Abonnement {
     }
 
     public AbonnementSansEngagement(String nomService, double montantMensuel, LocalDate dateDebut,
-                                    LocalDate dateFin, Statut statut) {
+            LocalDate dateFin, Statut statut) {
         super(nomService, montantMensuel, dateDebut, dateFin, statut);
     }
 

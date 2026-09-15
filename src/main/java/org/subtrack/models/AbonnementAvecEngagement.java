@@ -1,7 +1,7 @@
-package org.subtrack.model;
+package org.subtrack.models;
 
 import java.time.LocalDate;
-
+import org.subtrack.enums.Statut;
 public class AbonnementAvecEngagement extends Abonnement {
     private int dureeEngagementMois;
 

@@ -1,7 +1,7 @@
-package org.subtrack.model;
-
+package org.subtrack.models;
 import java.time.LocalDate;
 import java.util.UUID;
+import org.subtrack.enums.Statut;
 
 public abstract class Abonnement {
     private String id;
@@ -11,11 +11,7 @@ public abstract class Abonnement {
     private LocalDate dateFin;
     private Statut statut;
 
-    public enum Statut {
-        Active,
-        Suspendu,
-        Résilié
-    }
+  
 
     public Abonnement() {
         this.id = UUID.randomUUID().toString();
