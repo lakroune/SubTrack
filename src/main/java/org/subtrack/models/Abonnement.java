@@ -1,24 +1,37 @@
 package org.subtrack.models;
+
 import java.time.LocalDate;
 import java.util.UUID;
 import org.subtrack.enums.Statut;
 
 public abstract class Abonnement {
-    private String id;
-    private String nomService;
-    private double montantMensuel;
-    private LocalDate dateDebut;
-    private LocalDate dateFin;
-    private Statut statut;
-
-  
+    protected String id;
+    protected int idUser;
+    protected String nomService;
+    protected double montantMensuel;
+    protected LocalDate dateDebut;
+    protected LocalDate dateFin;
+    protected Statut statut;
 
     public Abonnement() {
         this.id = UUID.randomUUID().toString();
     }
 
-    public Abonnement(String nomService, double montantMensuel, LocalDate dateDebut, LocalDate dateFin, Statut statut) {
+    /**
+     * Constructeur
+     * 
+     * @param idUser
+     * @param nomService
+     * @param montantMensuel
+     * @param dateDebut
+     * @param dateFin
+     * @param statut
+     */
+
+    public Abonnement(int idUser, String nomService, double montantMensuel, LocalDate dateDebut, LocalDate dateFin,
+            Statut statut) {
         this.id = UUID.randomUUID().toString();
+        this.idUser = idUser;
         this.nomService = nomService;
         this.montantMensuel = montantMensuel;
         this.dateDebut = dateDebut;
@@ -30,8 +43,16 @@ public abstract class Abonnement {
         return id;
     }
 
+    public int getIdUser() {
+        return idUser;
+    }
+
     public String getNomService() {
         return nomService;
+    }
+
+    public void setIdUser(int idUser) {
+        this.idUser = idUser;
     }
 
     public void setNomService(String nomService) {
@@ -83,4 +104,4 @@ public abstract class Abonnement {
                 ", statut=" + statut +
                 '}';
     }
-} 
+}

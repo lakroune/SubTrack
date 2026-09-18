@@ -9,9 +9,9 @@ public class AbonnementSansEngagement extends Abonnement {
         super();
     }
 
-    public AbonnementSansEngagement(String nomService, double montantMensuel, LocalDate dateDebut,
+    public AbonnementSansEngagement(int idUser, String nomService, double montantMensuel, LocalDate dateDebut,
             LocalDate dateFin, Statut statut) {
-        super(nomService, montantMensuel, dateDebut, dateFin, statut);
+        super(idUser, nomService, montantMensuel, dateDebut, dateFin, statut);
     }
 
     @Override

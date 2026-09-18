@@ -1,17 +1,16 @@
 package org.subtrack.daos;
 
+import java.sql.SQLException;
 import java.util.List;
 
 public interface DAO<T> {
-    T save(T t);
+    T save(T t) throws SQLException;
 
-    T delete(T t);
+    T delete(T t) throws SQLException;
 
-    T update(T t);
+    T update(T t) throws SQLException;
 
-    T insert(T t);
+    T get(String id) throws SQLException;
 
-    T get(String id);
-
-    List<T> getAll();
+    List<T> getAll() throws SQLException;
 }

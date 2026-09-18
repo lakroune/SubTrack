@@ -2,16 +2,21 @@ package org.subtrack.models;
 
 import java.time.LocalDate;
 import org.subtrack.enums.Statut;
+
 public class AbonnementAvecEngagement extends Abonnement {
     private int dureeEngagementMois;
 
+    /**
+     * Constructeur par défaut
+     * 
+     */
     public AbonnementAvecEngagement() {
         super();
     }
 
-    public AbonnementAvecEngagement(String nomService, double montantMensuel, LocalDate dateDebut,
-                                    LocalDate dateFin, Statut statut, int dureeEngagementMois) {
-        super(nomService, montantMensuel, dateDebut, dateFin, statut);
+    public AbonnementAvecEngagement(int idUser, String nomService, double montantMensuel, LocalDate dateDebut,
+            LocalDate dateFin, Statut statut, int dureeEngagementMois) {
+        super(idUser, nomService, montantMensuel, dateDebut, dateFin, statut);
         this.dureeEngagementMois = dureeEngagementMois;
     }
 

@@ -1,8 +1,8 @@
 package org.subtrack.models;
- 
+
 import java.time.LocalDate;
 import java.util.UUID;
-import org.subtrack.enums.Statut; 
+import org.subtrack.enums.Statut;
 
 public class Paiement {
     private String idPaiement;
@@ -12,14 +12,12 @@ public class Paiement {
     private String typePaiement;
     private Statut statut;
 
-  
-
     public Paiement() {
         this.idPaiement = UUID.randomUUID().toString();
     }
 
     public Paiement(String idAbonnement, LocalDate dateEcheance, LocalDate datePaiement,
-                    String typePaiement, Statut statut) {
+            String typePaiement, Statut statut) {
         this.idPaiement = UUID.randomUUID().toString();
         this.idAbonnement = idAbonnement;
         this.dateEcheance = dateEcheance;

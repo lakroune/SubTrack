@@ -1,3 +1,4 @@
+-- Active: 1789486337362@@127.0.0.1@5433@subtrack_db
 DROP TABLE IF EXISTS paiements CASCADE;
 DROP TABLE IF EXISTS abonnements CASCADE;
 DROP TABLE IF EXISTS users CASCADE;
@@ -26,10 +27,10 @@ CREATE TABLE users (
 CREATE TABLE abonnements (
     id VARCHAR(50) PRIMARY KEY,
     id_user VARCHAR(50) NOT NULL,
-    nom_service VARCHAR(100) NOT NULL,
-    montant_mensuel NUMERIC(10, 2) NOT NULL,
-    date_debut DATE NOT NULL,
-    date_fin DATE,
+    nomservice VARCHAR(100) NOT NULL,
+    montantMensuel NUMERIC(10, 2) NOT NULL,
+    dateDebut DATE NOT NULL,
+    dateFin DATE,
     statut statut_enum NOT NULL DEFAULT 'ACTIF',
     type_abonnement VARCHAR(30) NOT NULL CHECK (type_abonnement IN ('AVEC_ENGAGEMENT', 'SANS_ENGAGEMENT')),
     duree_engagement_mois INT CHECK (duree_engagement_mois > 0 OR duree_engagement_mois IS NULL),
@@ -56,3 +57,4 @@ CREATE INDEX idx_users_email ON users(email);
 CREATE INDEX idx_abonnements_user ON abonnements(id_user);
 CREATE INDEX idx_abonnements_statut ON abonnements(statut);
 CREATE INDEX idx_paiements_abonnement ON paiements(id_abonnement);
+
