@@ -6,7 +6,7 @@ import org.subtrack.enums.Statut;
 
 public abstract class Abonnement {
     protected String id;
-    protected int idUser;
+    protected String idUser;
     protected String nomService;
     protected double montantMensuel;
     protected LocalDate dateDebut;
@@ -28,7 +28,7 @@ public abstract class Abonnement {
      * @param statut
      */
 
-    public Abonnement(int idUser, String nomService, double montantMensuel, LocalDate dateDebut, LocalDate dateFin,
+    public Abonnement(String idUser, String nomService, double montantMensuel, LocalDate dateDebut, LocalDate dateFin,
             Statut statut) {
         this.id = UUID.randomUUID().toString();
         this.idUser = idUser;
@@ -43,7 +43,7 @@ public abstract class Abonnement {
         return id;
     }
 
-    public int getIdUser() {
+    public String getIdUser() {
         return idUser;
     }
 
@@ -51,7 +51,7 @@ public abstract class Abonnement {
         return nomService;
     }
 
-    public void setIdUser(int idUser) {
+    public void setIdUser(String idUser) {
         this.idUser = idUser;
     }
 

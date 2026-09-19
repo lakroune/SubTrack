@@ -1,14 +1,16 @@
 package org.subtrack.models;
 
+import java.util.UUID;
+
 public class User {
-    private int id;
+    private String id;
     private String nom;
     private String prenom;
     private String email;
     private String password;
 
-    public User(int id, String nom, String prenom, String email, String password) {
-        this.id = id;
+    public User(String nom, String prenom, String email, String password) {
+        this.id = UUID.randomUUID().toString();
         this.nom = nom;
         this.prenom = prenom;
         this.email = email;
@@ -16,7 +18,7 @@ public class User {
 
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
 
@@ -36,7 +38,7 @@ public class User {
         this.password = password;
     }
 
-    public int getId() {
+    public String getId() {
         return id;
     }
 

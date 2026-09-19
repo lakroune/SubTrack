@@ -9,7 +9,7 @@ public class AbonnementSansEngagement extends Abonnement {
         super();
     }
 
-    public AbonnementSansEngagement(int idUser, String nomService, double montantMensuel, LocalDate dateDebut,
+    public AbonnementSansEngagement(String idUser, String nomService, double montantMensuel, LocalDate dateDebut,
             LocalDate dateFin, Statut statut) {
         super(idUser, nomService, montantMensuel, dateDebut, dateFin, statut);
     }

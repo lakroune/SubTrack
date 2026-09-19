@@ -14,7 +14,7 @@ public class AbonnementAvecEngagement extends Abonnement {
         super();
     }
 
-    public AbonnementAvecEngagement(int idUser, String nomService, double montantMensuel, LocalDate dateDebut,
+    public AbonnementAvecEngagement(String idUser, String nomService, double montantMensuel, LocalDate dateDebut,
             LocalDate dateFin, Statut statut, int dureeEngagementMois) {
         super(idUser, nomService, montantMensuel, dateDebut, dateFin, statut);
         this.dureeEngagementMois = dureeEngagementMois;
