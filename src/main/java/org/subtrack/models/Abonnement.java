@@ -28,9 +28,29 @@ public abstract class Abonnement {
      * @param statut
      */
 
-    public Abonnement(String idUser, String nomService, double montantMensuel, LocalDate dateDebut, LocalDate dateFin,
+    public Abonnement(String idUser,
+            String nomService,
+            double montantMensuel,
+            LocalDate dateDebut,
+            LocalDate dateFin,
             Statut statut) {
         this.id = UUID.randomUUID().toString();
+        this.idUser = idUser;
+        this.nomService = nomService;
+        this.montantMensuel = montantMensuel;
+        this.dateDebut = dateDebut;
+        this.dateFin = dateFin;
+        this.statut = statut;
+    }
+
+    public Abonnement(String id,
+            String idUser,
+            String nomService,
+            double montantMensuel,
+            LocalDate dateDebut,
+            LocalDate dateFin,
+            Statut statut) {
+        this.id = id;
         this.idUser = idUser;
         this.nomService = nomService;
         this.montantMensuel = montantMensuel;

@@ -1,6 +1,7 @@
 package org.subtrack.config;
 
 import java.sql.Connection;
+import java.sql.DriverManager;
 
 public class DatabaseConnection {
     private static final String URL = "jdbc:postgresql://localhost:5433/subtrack_db";
@@ -12,12 +13,13 @@ public class DatabaseConnection {
     }
 
     public static Connection getConnection() {
-        if (connection == null) {
-            try {
-                connection = java.sql.DriverManager.getConnection(URL, USERNAME, PASSWORD);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
+
+        try {
+            if (connection == null || connection.isClosed())
+                connection = DriverManager.getConnection(URL, USERNAME, PASSWORD);
+        } catch (Exception e) {
+            e.printStackTrace();
+
         }
         return connection;
     }

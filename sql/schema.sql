@@ -49,6 +49,7 @@ CREATE TABLE abonnements (
 );
 
 SELECT * FROM abonnements;
+DELETE from abonnements ;
 -- CREATE TABLE paiements (
 --     id_paiement VARCHAR(50) PRIMARY KEY,
 --     id_abonnement VARCHAR(50) NOT NULL,
