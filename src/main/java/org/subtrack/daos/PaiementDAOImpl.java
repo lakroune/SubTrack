@@ -1,13 +1,17 @@
 package org.subtrack.daos;
 
 import org.subtrack.config.DatabaseConnection;
+import org.subtrack.enums.Statut;
 import org.subtrack.models.Paiement;
 
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Types;
+import java.util.ArrayList;
+import java.util.List;
 
 public class PaiementDAOImpl implements PaiementDAO {
 
@@ -98,6 +102,97 @@ public class PaiementDAOImpl implements PaiementDAO {
             e.printStackTrace();
             throw e;
         }
+    }
+
+    @Override
+    public Paiement get(String idPaiement) throws SQLException {
+        String selectSql = "SELECT * FROM paiements WHERE idPaiement = ?";
+
+        try (Connection connection = DatabaseConnection.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(selectSql)) {
+
+            preparedStatement.setString(1, idPaiement);
+
+            try (ResultSet resultat = preparedStatement.executeQuery()) {
+                if (resultat.next()) {
+                    Paiement p = new Paiement();
+                    p.setIdPaiement(resultat.getString("idPaiement"));
+                    p.setIdAbonnement(resultat.getString("idAbonnement"));
+
+                    Date dateEcheance = resultat.getDate("dateEcheance");
+                    if (dateEcheance != null) {
+                        p.setDateEcheance(dateEcheance.toLocalDate());
+                    }
+
+                    Date datePaiement = resultat.getDate("datePaiement");
+                    if (datePaiement != null) {
+                        p.setDatePaiement(datePaiement.toLocalDate());
+                    }
+
+                    String typePaiement = resultat.getString("typePaiement");
+                    if (typePaiement != null) {
+                        p.setTypePaiement(typePaiement);
+                    }
+
+                    String statut = resultat.getString("statut");
+                    if (statut != null) {
+                        p.setStatut(Statut.valueOf(statut));
+                    }
+
+                    return p;
+                }
+            }
+            return null;
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw e;
+        }
+    }
+
+    @Override
+    public List<Paiement> getAll() throws SQLException {
+        List<Paiement> list = new ArrayList<>();
+        String selectSql = "SELECT * FROM paiements";
+
+        try (Connection connection = DatabaseConnection.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(selectSql);
+             ResultSet rs = preparedStatement.executeQuery()) {
+
+            while (rs.next()) {
+                Paiement p = new Paiement();
+                p.setIdPaiement(rs.getString("idPaiement"));
+                p.setIdAbonnement(rs.getString("idAbonnement"));
+
+                Date dateEcheance = rs.getDate("dateEcheance");
+                if (dateEcheance != null) {
+                    p.setDateEcheance(dateEcheance.toLocalDate());
+                }
+
+                Date datePaiement = rs.getDate("datePaiement");
+                if (datePaiement != null) {
+                    p.setDatePaiement(datePaiement.toLocalDate());
+                }
+
+                String typePaiement = rs.getString("typePaiement");
+                if (typePaiement != null) {
+                    p.setTypePaiement(typePaiement);
+                }
+
+                String statut = rs.getString("statut");
+                if (statut != null) {
+                    p.setStatut(Statut.valueOf(statut));
+                }
+
+                list.add(p);
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw e;
+        }
+
+        return list;
     }
 
 }

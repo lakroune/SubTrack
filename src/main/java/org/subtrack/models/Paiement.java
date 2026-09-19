@@ -2,6 +2,7 @@ package org.subtrack.models;
 
 import java.time.LocalDate;
 import java.util.UUID;
+
 import org.subtrack.enums.Statut;
 
 public class Paiement {
@@ -13,16 +14,16 @@ public class Paiement {
     private Statut statut;
 
     /**
-     * 
-     * 
+     *
+     *
      */
     public Paiement() {
         this.idPaiement = UUID.randomUUID().toString();
     }
 
     /**
-     * 
-     * 
+     *
+     *
      * @param idPaiement
      * @param idAbonnement
      * @param dateEcheance
@@ -31,7 +32,7 @@ public class Paiement {
      * @param statut
      */
     public Paiement(String idPaiement, String idAbonnement, LocalDate dateEcheance, LocalDate datePaiement,
-            String typePaiement, Statut statut) {
+                    String typePaiement, Statut statut) {
         this.idPaiement = idPaiement;
         this.idAbonnement = idAbonnement;
         this.dateEcheance = dateEcheance;
@@ -41,9 +42,9 @@ public class Paiement {
     }
 
     /**
-     * 
-     * 
-     * 
+     *
+     *
+     *
      * @param idAbonnement
      * @param dateEcheance
      * @param datePaiement
@@ -52,7 +53,7 @@ public class Paiement {
      */
 
     public Paiement(String idAbonnement, LocalDate dateEcheance, LocalDate datePaiement,
-            String typePaiement, Statut statut) {
+                    String typePaiement, Statut statut) {
         this.idPaiement = UUID.randomUUID().toString();
         this.idAbonnement = idAbonnement;
         this.dateEcheance = dateEcheance;
@@ -64,6 +65,11 @@ public class Paiement {
     public String getIdPaiement() {
         return idPaiement;
     }
+
+    public void setIdPaiement(String idPaiement) {
+        this.idPaiement = idPaiement;
+    }
+
 
     public String getIdAbonnement() {
         return idAbonnement;
