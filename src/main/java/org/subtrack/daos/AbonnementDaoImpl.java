@@ -9,7 +9,6 @@ import java.sql.Types;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-import java.sql.Date;
 
 import org.subtrack.config.DatabaseConnection;
 import org.subtrack.enums.Statut;
@@ -17,7 +16,7 @@ import org.subtrack.models.Abonnement;
 import org.subtrack.models.AbonnementAvecEngagement;
 import org.subtrack.models.AbonnementSansEngagement;
 
-public class AbonnementDaoImpl implements DAO<Abonnement> {
+public class AbonnementDaoImpl implements AbonnementDao {
     public AbonnementDaoImpl() {
     }
 

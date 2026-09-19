@@ -12,9 +12,44 @@ public class Paiement {
     private String typePaiement;
     private Statut statut;
 
+    /**
+     * 
+     * 
+     */
     public Paiement() {
         this.idPaiement = UUID.randomUUID().toString();
     }
+
+    /**
+     * 
+     * 
+     * @param idPaiement
+     * @param idAbonnement
+     * @param dateEcheance
+     * @param datePaiement
+     * @param typePaiement
+     * @param statut
+     */
+    public Paiement(String idPaiement, String idAbonnement, LocalDate dateEcheance, LocalDate datePaiement,
+            String typePaiement, Statut statut) {
+        this.idPaiement = idPaiement;
+        this.idAbonnement = idAbonnement;
+        this.dateEcheance = dateEcheance;
+        this.datePaiement = datePaiement;
+        this.typePaiement = typePaiement;
+        this.statut = statut;
+    }
+
+    /**
+     * 
+     * 
+     * 
+     * @param idAbonnement
+     * @param dateEcheance
+     * @param datePaiement
+     * @param typePaiement
+     * @param statut
+     */
 
     public Paiement(String idAbonnement, LocalDate dateEcheance, LocalDate datePaiement,
             String typePaiement, Statut statut) {
