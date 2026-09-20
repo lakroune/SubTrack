@@ -18,7 +18,9 @@ VALUES ('ACTIF'),
     ('SUSPENDU'),
     ('PAYE'),
     ('EN_ATTENTE'),
-    ('EN_RETARD');
+    ('EN_RETARD'),
+    ('RESILIE')
+    ;
 
 -- 2. Table Utilisateurs
 CREATE TABLE users (
@@ -39,10 +41,10 @@ INSERT INTO
     )
 VALUES (
         gen_random_uuid ()::text,
-        'Dupont',
-        'Jean',
-        'jean@gmail.com',
-        'pqsszord'
+        'smail',
+        'lakroune',
+        'smail@smail.com',
+        'smail'
     );
 
 SELECT * FROM users;
@@ -76,7 +78,7 @@ DELETE from abonnements;
 CREATE TABLE paiements (
     idPaiement VARCHAR(50) PRIMARY KEY,
     idAbonnement VARCHAR(50) NOT NULL,
-    montant DOUBLE PRECISION NOT NULL CHECK (montant >= 0), -- إضافة حقل المبلغ مع التأكد أنه موجب
+    -- montant DOUBLE PRECISION NOT NULL CHECK (montant >= 0), 
     dateEcheance DATE NOT NULL,
     datePaiement DATE,
     typePaiement VARCHAR(50) NOT NULL,
@@ -91,7 +93,7 @@ CREATE TABLE paiements (
         CHECK (statut IN ('EN_ATTENTE', 'PAYE', 'EN_RETARD', 'ANNULE'))
 );
 
--- CREATE INDEX idx_users_email ON users(email);
--- CREATE INDEX idx_abonnements_user ON abonnements(id_user);
--- CREATE INDEX idx_abonnements_statut ON abonnements(statut);
--- CREATE INDEX idx_paiements_abonnement ON paiements(id_abonnement);
+CREATE INDEX idx_users_email ON users(email);
+CREATE INDEX idx_abonnements_user ON abonnements(idUser);
+CREATE INDEX idx_abonnements_statut ON abonnements(statut);
+CREATE INDEX idx_paiements_abonnement ON paiements(idAbonnement);

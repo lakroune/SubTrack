@@ -71,6 +71,10 @@ public abstract class Abonnement {
         return nomService;
     }
 
+    public void setId(String id) {
+        this.id = id;
+    }
+
     public void setIdUser(String idUser) {
         this.idUser = idUser;
     }

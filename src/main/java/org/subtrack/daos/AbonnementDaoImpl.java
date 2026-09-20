@@ -200,4 +200,58 @@ public class AbonnementDaoImpl implements AbonnementDao {
         return abonnements;
     }
 
+    public List<Abonnement> findByType(String typeAbonnement) throws SQLException {
+
+        List<Abonnement> abonnements = new ArrayList<>();
+        String sql = "SELECT * FROM abonnements WHERE typeAbonnement = ?";
+
+        try (Connection connection = DatabaseConnection.getConnection();
+                PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+
+            preparedStatement.setString(1, typeAbonnement);
+
+            ResultSet resultat = preparedStatement.executeQuery();
+            while (resultat.next()) {
+                Abonnement a;
+                String type = resultat.getString("typeAbonnement");
+
+                if ("AVEC_ENGAGEMENT".equalsIgnoreCase(type)) {
+                    AbonnementAvecEngagement avecEng = new AbonnementAvecEngagement();
+                    avecEng.setDureeEngagementMois(resultat.getInt("dureeEngagementMois"));
+                    a = avecEng;
+                } else {
+                    a = new AbonnementSansEngagement();
+                }
+
+                a.setId(resultat.getString("id"));
+                a.setIdUser(resultat.getString("idUser"));
+                a.setNomService(resultat.getString("nomService"));
+                a.setMontantMensuel(resultat.getDouble("montantMensuel"));
+
+                Date dateDebut = resultat.getDate("dateDebut");
+                if (dateDebut != null)
+                    a.setDateDebut(dateDebut.toLocalDate());
+
+                Date dateFin = resultat.getDate("dateFin");
+                if (dateFin != null)
+                    a.setDateFin(dateFin.toLocalDate());
+
+                String statut = resultat.getString("statut");
+                if (statut != null)
+                    a.setStatut(Statut.valueOf(statut));
+
+                abonnements.add(a);
+            }
+
+        } catch (
+
+        SQLException e) {
+            e.printStackTrace();
+            throw e;
+        }
+
+        return abonnements;
+    }
+
+  
 }

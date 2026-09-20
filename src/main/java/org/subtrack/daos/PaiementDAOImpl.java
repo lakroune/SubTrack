@@ -15,14 +15,13 @@ import java.util.List;
 
 public class PaiementDAOImpl implements PaiementDAO {
 
-
     @Override
     public Paiement save(Paiement p) throws SQLException {
         String insertSql = "INSERT INTO paiements (idPaiement, idAbonnement, dateEcheance, datePaiement, typePaiement, statut) "
                 + "VALUES (?, ?, ?, ?, ?, ?)";
 
         try (Connection connection = DatabaseConnection.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(insertSql)) {
+                PreparedStatement preparedStatement = connection.prepareStatement(insertSql)) {
 
             preparedStatement.setString(1, p.getIdPaiement());
             preparedStatement.setString(2, p.getIdAbonnement());
@@ -54,7 +53,7 @@ public class PaiementDAOImpl implements PaiementDAO {
         String deleteSql = "DELETE FROM paiements WHERE idPaiement = ?";
 
         try (Connection connection = DatabaseConnection.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(deleteSql)) {
+                PreparedStatement preparedStatement = connection.prepareStatement(deleteSql)) {
 
             preparedStatement.setString(1, p.getIdPaiement());
 
@@ -70,14 +69,13 @@ public class PaiementDAOImpl implements PaiementDAO {
         }
     }
 
-
     @Override
     public Paiement update(Paiement p) throws SQLException {
         String updateSql = "UPDATE paiements SET idAbonnement = ?, dateEcheance = ?, datePaiement = ?, typePaiement = ?, statut = ? "
                 + "WHERE idPaiement = ?";
 
         try (Connection connection = DatabaseConnection.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(updateSql)) {
+                PreparedStatement preparedStatement = connection.prepareStatement(updateSql)) {
 
             preparedStatement.setString(1, p.getIdAbonnement());
             preparedStatement.setDate(2, Date.valueOf(p.getDateEcheance()));
@@ -109,7 +107,7 @@ public class PaiementDAOImpl implements PaiementDAO {
         String selectSql = "SELECT * FROM paiements WHERE idPaiement = ?";
 
         try (Connection connection = DatabaseConnection.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(selectSql)) {
+                PreparedStatement preparedStatement = connection.prepareStatement(selectSql)) {
 
             preparedStatement.setString(1, idPaiement);
 
@@ -156,8 +154,8 @@ public class PaiementDAOImpl implements PaiementDAO {
         String selectSql = "SELECT * FROM paiements";
 
         try (Connection connection = DatabaseConnection.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(selectSql);
-             ResultSet rs = preparedStatement.executeQuery()) {
+                PreparedStatement preparedStatement = connection.prepareStatement(selectSql);
+                ResultSet rs = preparedStatement.executeQuery()) {
 
             while (rs.next()) {
                 Paiement p = new Paiement();
@@ -195,4 +193,28 @@ public class PaiementDAOImpl implements PaiementDAO {
         return list;
     }
 
+    
+    
+    public List<Paiement> findByAbonnement(String idAbonnement) {
+        return new ArrayList<Paiement>();
+
+    }
+
+    public List<Paiement> findUnpaidByAbonnement(String idAbonnement) {
+        return new ArrayList<Paiement>();
+
+    }
+
+    public List<Paiement> findLastPayments(int limit) {
+        return new ArrayList<Paiement>();
+    }
+
+    public double getSommePayeeParAbonnement(String idAbonnement) {
+        return 0;
+    }
+
+    public List<Paiement> getDerniersPaiements(int limit) {
+        return new ArrayList<Paiement>();
+
+    }
 }

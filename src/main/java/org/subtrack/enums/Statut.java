@@ -6,5 +6,6 @@ public enum Statut {
     SUSPENDU,
     PAYE,
     EN_ATTENTE,
-    EN_RETARD
+    EN_RETARD,
+    RESILIE
 }
