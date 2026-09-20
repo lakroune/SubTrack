@@ -4,7 +4,6 @@ import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.subtrack.daos.AbonnementDaoImpl;
@@ -12,7 +11,6 @@ import org.subtrack.enums.Statut;
 import org.subtrack.models.Abonnement;
 import org.subtrack.models.AbonnementAvecEngagement;
 import org.subtrack.models.AbonnementSansEngagement;
-import org.subtrack.models.Paiement;
 
 /**
  * AbonnementService

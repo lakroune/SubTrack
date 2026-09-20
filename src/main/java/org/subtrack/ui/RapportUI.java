@@ -15,7 +15,7 @@ public class RapportUI {
     }
 
     public void consulterPaiementsManquesEngagements() {
-        System.out.println("\n--- Paiements manqués (Abonnements avec engagement) ---");
+        System.out.println("\n--- Paiements manques (Abonnements avec engagement) ---");
         paiementService.afficherPaiementsManquesAvecTotalImpaye();
     }
 

@@ -78,7 +78,6 @@ DELETE from abonnements;
 CREATE TABLE paiements (
     idPaiement VARCHAR(50) PRIMARY KEY,
     idAbonnement VARCHAR(50) NOT NULL,
-    -- montant DOUBLE PRECISION NOT NULL CHECK (montant >= 0), 
     dateEcheance DATE NOT NULL,
     datePaiement DATE,
     typePaiement VARCHAR(50) NOT NULL,

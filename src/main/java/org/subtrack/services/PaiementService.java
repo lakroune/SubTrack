@@ -6,6 +6,7 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.subtrack.daos.AbonnementDao;
 import org.subtrack.daos.AbonnementDaoImpl;
 import org.subtrack.daos.PaiementDAOImpl;
 import org.subtrack.enums.Statut;
@@ -31,7 +32,7 @@ public class PaiementService {
             Paiement nouveauPaiement = paiementDAO.save(p);
             return nouveauPaiement;
         } catch (SQLException e) {
-            System.out.println("Erreur lors de l'enregistrement du paiement : " + e.getMessage());
+            System.out.println("Erreur l'enregistrement  paiement : " + e.getMessage());
             e.printStackTrace();
             return null;
         }
@@ -41,7 +42,7 @@ public class PaiementService {
         try {
             return paiementDAO.get(idPaiement);
         } catch (SQLException e) {
-            System.out.println("Erreur lors de la récupération du paiement : " + e.getMessage());
+            System.out.println("Erreur recupé=eration  paiement : " + e.getMessage());
             return null;
         }
     }
@@ -53,9 +54,9 @@ public class PaiementService {
     public void updatePaiement(Paiement p) {
         try {
             paiementDAO.update(p);
-            System.out.println("Paiement mis à jour avec succès.");
+            System.out.println("Paiement mis a jour .");
         } catch (SQLException e) {
-            System.out.println("Erreur lors de la mise à jour du paiement : " + e.getMessage());
+            System.out.println("Erreur de la mise à jour  : " + e.getMessage());
         }
     }
 
@@ -68,12 +69,12 @@ public class PaiementService {
             Paiement p = paiementDAO.get(idPaiement);
             if (p != null) {
                 paiementDAO.delete(p);
-                System.out.println("Paiement supprimé avec succès.");
+                System.out.println("Paiement supprimé .");
             } else {
-                System.out.println("Impossible de supprimer : paiement introuvable.");
+                System.out.println("Impossible de supprimer ");
             }
         } catch (SQLException e) {
-            System.out.println("Erreur lors de la suppression du paiement : " + e.getMessage());
+            System.out.println("Erreur de la suppression  : " + e.getMessage());
         }
     }
 
@@ -145,11 +146,11 @@ public class PaiementService {
                     .collect(Collectors.toList());
 
             if (paiementsManques.isEmpty()) {
-                System.out.println("Aucun paiement manqué ou en retard trouvé.");
+                System.out.println("Aucun paiement manque .");
                 return;
             }
 
-            System.out.println("=== Liste des paiements manqués ===");
+            System.out.println("*****Liste des paiements manque ****");
             double totalImpaye = 0.0;
 
             for (Paiement p : paiementsManques) {
@@ -164,9 +165,7 @@ public class PaiementService {
                         + " | Montant: " + montant + " DH");
             }
 
-            System.out.println("-----------------------------------");
             System.out.println("TOTAL DES IMPAYÉS : " + totalImpaye + " DH");
-            System.out.println("-----------------------------------");
 
         } catch (Exception e) {
             System.out.println("Erreur lors de l'affichage des impayés : " + e.getMessage());
@@ -175,14 +174,107 @@ public class PaiementService {
     }
 
     public void genererRapportMensuel(int mois, int annee) {
+        try {
+            AbonnementDaoImpl abonnementDAO = new AbonnementDaoImpl();
+            PaiementDAOImpl paiementDAO = new PaiementDAOImpl();
 
+            List<Abonnement> abonnements = abonnementDAO.getAll();
+            List<Paiement> paiements = paiementDAO.getAll();
+
+            List<Paiement> paiementsDuMois = paiements.stream()
+                    .filter(p -> p.getDatePaiement() != null
+                            && p.getDatePaiement().getMonthValue() == mois
+                            && p.getDatePaiement().getYear() == annee)
+                    .collect(Collectors.toList());
+
+            double totalEncaisse = paiementsDuMois.stream()
+                    .mapToDouble(p -> abonnements.stream()
+                            .filter(a -> a.getId().equals(p.getIdAbonnement()))
+                            .findFirst()
+                            .map(Abonnement::getMontantMensuel)
+                            .orElse(0.0))
+                    .sum();
+
+            long nbNouveauxAbonnements = abonnements.stream()
+                    .filter(a -> a.getDateDebut() != null
+                            && a.getDateDebut().getMonthValue() == mois
+                            && a.getDateDebut().getYear() == annee)
+                    .count();
+
+            System.out.println("=== Rapport " + mois + "/" + annee + " ===");
+            System.out.println("Nouveaux abonnements : " + nbNouveauxAbonnements);
+            System.out.println("Nombre de paiements   : " + paiementsDuMois.size());
+            System.out.println("Total encaissé        : " + totalEncaisse + " DH");
+
+        } catch (Exception e) {
+            System.out.println("Erreur : " + e.getMessage());
+        }
     }
 
     public void genererRapportAnnuel(int annee) {
+        try {
+            AbonnementDaoImpl abonnementDAO = new AbonnementDaoImpl();
+            PaiementDAOImpl paiementDAO = new PaiementDAOImpl();
 
+            List<Abonnement> abonnements = abonnementDAO.getAll();
+            List<Paiement> paiements = paiementDAO.getAll();
+
+            List<Paiement> paiementsDeLAnnee = paiements.stream()
+                    .filter(p -> p.getDatePaiement() != null
+                            && p.getDatePaiement().getYear() == annee)
+                    .collect(Collectors.toList());
+
+            double totalEncaisse = paiementsDeLAnnee.stream()
+                    .mapToDouble(p -> abonnements.stream()
+                            .filter(a -> a.getId().equals(p.getIdAbonnement()))
+                            .findFirst()
+                            .map(Abonnement::getMontantMensuel)
+                            .orElse(0.0))
+                    .sum();
+
+            long nbNouveauxAbonnements = abonnements.stream()
+                    .filter(a -> a.getDateDebut() != null
+                            && a.getDateDebut().getYear() == annee)
+                    .count();
+
+            System.out.println("=== Rapport Annuel " + annee + " ===");
+            System.out.println("Nouveaux abonnements : " + nbNouveauxAbonnements);
+            System.out.println("Nombre de paiements   : " + paiementsDeLAnnee.size());
+            System.out.println("Total encaissé        : " + totalEncaisse + " DH");
+
+        } catch (Exception e) {
+            System.out.println("Erreur : " + e.getMessage());
+        }
     }
 
     public void genererRapportImpayes() {
+        try {
+            PaiementDAOImpl paiementDAO = new PaiementDAOImpl();
+            AbonnementDaoImpl abonnementDAO = new AbonnementDaoImpl();
 
+            List<Paiement> paiements = paiementDAO.getAll();
+            List<Abonnement> abonnements = abonnementDAO.getAll();
+
+            List<Paiement> impayes = paiements.stream()
+                    .filter(p -> p.getStatut() != null && (p.getStatut().toString().equalsIgnoreCase("EN_ATTENTE") ||
+                            p.getStatut().toString().equalsIgnoreCase("EN_RETARD") ||
+                            p.getStatut().toString().equalsIgnoreCase("ECHOUE")))
+                    .collect(Collectors.toList());
+
+            double totalImpaye = impayes.stream()
+                    .mapToDouble(p -> abonnements.stream()
+                            .filter(a -> a.getId().equals(p.getIdAbonnement()))
+                            .findFirst()
+                            .map(Abonnement::getMontantMensuel)
+                            .orElse(0.0))
+                    .sum();
+
+            System.out.println("=== Rapport des Impayes ===");
+            System.out.println("Nombre de paiements non regles : " + impayes.size());
+            System.out.println("Total non paye                 : " + totalImpaye + " DH");
+
+        } catch (Exception e) {
+            System.out.println("Erreur  de la génération  : " + e.getMessage());
+        }
     }
 }
